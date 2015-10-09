@@ -23,7 +23,7 @@ public:
 	void parseFile(string);
 	string& getRootName();
 	void setRootName(string& rootName);
-
+	int findNumberOfGoodTemplates();
 
 private:
 	string rootName;
