@@ -16,7 +16,15 @@ BlastParser::BlastParser(string _rootName) {
 	setRootName(_rootName);
 
 }
-
+int BlastParser::findNumberOfGoodTemplates(){
+	int counter=0;
+	for(int i=0;i<blastRecords.size();i++){
+		if(blastRecords[i].getExpect()<=0.01){
+			counter++;
+		}
+	}
+	return counter;
+}
 void BlastParser::parseFile(string blastResultFileLocation) {
 	string blastResultFile(blastResultFileLocation);
 	blastResultFile += rootName;
@@ -47,15 +55,15 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 			} else {
 				continue;
 			}
-			cout << "prev: " << prevState << " current: " << currentState
-					<< endl;
+			/*cout << "prev: " << prevState << " current: " << currentState
+					<< endl;*/
 			if ((prevState == 'D' && currentState == 'B')
 					|| (prevState == 'C' && currentState == 'B')
 					|| (prevState == 'D' && currentState == 'A')
 					|| (prevState == 'C' && currentState == 'A')) {
 
 				blastRecords.push_back(blastRecord);
-				blastRecord.displayRecordInfo();
+				//blastRecord.displayRecordInfo();
 				string emptyString("");
 				blastRecord.setQueryPart(emptyString);
 				blastRecord.setSubjectPart(emptyString);
@@ -64,7 +72,7 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 			if (currentState == 'A') {
 				string nameLine(line);
 				string hitName = nameLine.substr(1, 6);
-				cout << "hitName is " << hitName << endl;
+				//cout << "hitName is " << hitName << endl;
 				blastRecord.setHitName(hitName);
 
 			} else if (currentState == 'B') {
@@ -79,8 +87,8 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 
 				blastRecord.setScore(score);
 				blastRecord.setExpect(expect);
-				cout << "score: " << score << endl;
-				cout << "expect: " << expect << endl;
+				/*cout << "score: " << score << endl;
+				cout << "expect: " << expect << endl;*/
 			} else if (currentState == 'C') {
 
 				char info0[6], queryPart[200];
@@ -106,10 +114,11 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 				blastRecord.setSubjectStart(subjectStart);
 				blastRecord.setSubjectPart(_subjectPart);
 				blastRecord.setSubjectEnd(subjectEnd);
+				/*
 				cout << "query info: " << queryStart << queryPart << queryEnd
 						<< endl;
 				cout << "subject info: " << subjectStart << subjectPart
-						<< subjectEnd << endl;
+						<< subjectEnd << endl;*/
 			} else if (currentState == 'D') {
 
 				char info0[6], queryPart[200];
@@ -139,19 +148,19 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 				blastRecord.setSubjectPart(oldSubjectPart);
 
 				blastRecord.setSubjectEnd(subjectEnd);
-
+/*
 				cout << "query info: " << blastRecord.getQueryStart()
 						<< blastRecord.getQueryPart()
 						<< blastRecord.getQueryEnd() << endl;
 				cout << "subject info: " << blastRecord.getSubjectStart()
 						<< blastRecord.getSubjectPart()
-						<< blastRecord.getSubjectEnd() << endl;
+						<< blastRecord.getSubjectEnd() << endl;*/
 			}
 			prevState = currentState;
 
 		}
 		blastRecords.push_back(blastRecord);//don't forget the last hit
-		blastRecord.displayRecordInfo();
+		//blastRecord.displayRecordInfo();
 
 	}
 }
