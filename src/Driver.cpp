@@ -16,9 +16,11 @@ using namespace std;
 
 int main(int argc,char* argv[]) {
 
-	BlastParser blastParser("T0759");
+	BlastParser blastParser(argv[1]);
 
 	blastParser.parseFile("/home/cf797/test/casp11Alignment/");
+
+	cout<<argv[1]<<","<<blastParser.findNumberOfGoodTemplates()<<endl;;
 
 	return 0;
 }
