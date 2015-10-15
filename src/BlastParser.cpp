@@ -16,10 +16,11 @@ BlastParser::BlastParser(string _rootName) {
 	setRootName(_rootName);
 
 }
-int BlastParser::findNumberOfGoodTemplates(){
-	int counter=0;
-	for(int i=0;i<blastRecords.size();i++){
-		if(blastRecords[i].getExpect()<=0.01){
+
+int BlastParser::findNumberOfGoodTemplates() {
+	int counter = 0;
+	for (int i = 0; i < blastRecords.size(); i++) {
+		if (blastRecords[i].getExpect() <= 0.01) {
 			counter++;
 		}
 	}
@@ -56,7 +57,7 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 				continue;
 			}
 			/*cout << "prev: " << prevState << " current: " << currentState
-					<< endl;*/
+			 << endl;*/
 			if ((prevState == 'D' && currentState == 'B')
 					|| (prevState == 'C' && currentState == 'B')
 					|| (prevState == 'D' && currentState == 'A')
@@ -88,7 +89,7 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 				blastRecord.setScore(score);
 				blastRecord.setExpect(expect);
 				/*cout << "score: " << score << endl;
-				cout << "expect: " << expect << endl;*/
+				 cout << "expect: " << expect << endl;*/
 			} else if (currentState == 'C') {
 
 				char info0[6], queryPart[200];
@@ -115,10 +116,10 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 				blastRecord.setSubjectPart(_subjectPart);
 				blastRecord.setSubjectEnd(subjectEnd);
 				/*
-				cout << "query info: " << queryStart << queryPart << queryEnd
-						<< endl;
-				cout << "subject info: " << subjectStart << subjectPart
-						<< subjectEnd << endl;*/
+				 cout << "query info: " << queryStart << queryPart << queryEnd
+				 << endl;
+				 cout << "subject info: " << subjectStart << subjectPart
+				 << subjectEnd << endl;*/
 			} else if (currentState == 'D') {
 
 				char info0[6], queryPart[200];
@@ -148,18 +149,18 @@ void BlastParser::parseFile(string blastResultFileLocation) {
 				blastRecord.setSubjectPart(oldSubjectPart);
 
 				blastRecord.setSubjectEnd(subjectEnd);
-/*
-				cout << "query info: " << blastRecord.getQueryStart()
-						<< blastRecord.getQueryPart()
-						<< blastRecord.getQueryEnd() << endl;
-				cout << "subject info: " << blastRecord.getSubjectStart()
-						<< blastRecord.getSubjectPart()
-						<< blastRecord.getSubjectEnd() << endl;*/
+				/*
+				 cout << "query info: " << blastRecord.getQueryStart()
+				 << blastRecord.getQueryPart()
+				 << blastRecord.getQueryEnd() << endl;
+				 cout << "subject info: " << blastRecord.getSubjectStart()
+				 << blastRecord.getSubjectPart()
+				 << blastRecord.getSubjectEnd() << endl;*/
 			}
 			prevState = currentState;
 
 		}
-		blastRecords.push_back(blastRecord);//don't forget the last hit
+		blastRecords.push_back(blastRecord); //don't forget the last hit
 		//blastRecord.displayRecordInfo();
 
 	}
