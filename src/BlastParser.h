@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
 #include <string.h>
 class BlastParser {
@@ -24,6 +25,8 @@ public:
 	string& getRootName();
 	void setRootName(string& rootName);
 	int findNumberOfGoodTemplates();
+
+	void storeRecords(string);
 
 private:
 	string rootName;
