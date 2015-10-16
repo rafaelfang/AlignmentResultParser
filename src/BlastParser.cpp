@@ -7,6 +7,8 @@
 
 #include "BlastParser.h"
 
+
+
 BlastParser::BlastParser() {
 	// TODO Auto-generated ructor stub
 
@@ -16,6 +18,37 @@ BlastParser::BlastParser(string _rootName) {
 	setRootName(_rootName);
 
 }
+
+void BlastParser::storeRecords(string resultPosition) {
+	ofstream myfile;
+	string outputFile(resultPosition);
+	outputFile += rootName;
+	outputFile += ".json";
+	myfile.open((char*) outputFile.c_str());
+
+	myfile << "{\"" << rootName << "\":["<<endl;
+	for (int i = 0; i < blastRecords.size(); i++) {
+		myfile << "\t{" << endl;
+		myfile << "\t\"hitName\":\"" << blastRecords[i].getHitName() << "\","<<endl;
+		myfile << "\t\"expect\":\"" << blastRecords[i].getExpect() << "\","<<endl;
+		myfile << "\t\"queryStart\":\"" << blastRecords[i].getQueryStart()
+				<< "\","<<endl;
+		myfile << "\t\"queryPart\":\"" << blastRecords[i].getQueryPart() << "\","<<endl;;
+		myfile << "\t\"queryEnd\":\"" << blastRecords[i].getQueryEnd() << "\","<<endl;
+		myfile << "\t\"subjectStart\":\"" << blastRecords[i].getSubjectStart()
+				<< "\","<<endl;;
+		myfile << "\t\"subjectPart\":\"" << blastRecords[i].getSubjectPart() << "\","<<endl;;
+		myfile << "\t\"subjectEnd\":\"" << blastRecords[i].getSubjectEnd() << "\"}";
+		if(i==blastRecords.size()-1){
+			myfile<<endl;
+		}else{
+			myfile << "," << endl;
+		}
+	}
+	myfile<<"]}"<<endl;
+	myfile.close();
+}
+
 
 int BlastParser::findNumberOfGoodTemplates() {
 	int counter = 0;
