@@ -9,18 +9,23 @@
 #include <cstring>
 #include <iostream>
 
-
 #include "BlastParser.h"
 
 using namespace std;
 
-int main(int argc,char* argv[]) {
+int main(int argc, char* argv[]) {
 
-	BlastParser blastParser(argv[1]);
+	if (argc != 3) {
+		cout << "the input should like this:" << endl;
+		cout << "<excutable> <type> <rootName>" << endl;
+		return 0;
+	}
+	if (strcmp(argv[1], "-blaPDB") == 0) {
 
-	blastParser.parseFile("/home/cf797/test/casp11Alignment/");
+		BlastParser blastParser(argv[2]);
+		blastParser.parseFile("/home/cf797/test/casp11Alignment/");
+		blastParser.storeRecords("/home/cf797/test/casp11OutputResultFolder/");
 
-	cout<<argv[1]<<","<<blastParser.findNumberOfGoodTemplates()<<endl;;
-
+	}
 	return 0;
 }
